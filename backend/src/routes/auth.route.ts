@@ -4,10 +4,9 @@ import {exchangeToken, getUserInfo} from '../services/auth.service';
 import {User} from '../types/types'; 
 import {mapGoogleUser} from '../utils';
 import {createUser} from '../services/auth.service'
-import { UserAlreadyExistsError,
-        GoogleTokenExchageError
- } from "../errors";
+import { UserAlreadyExistsError,GoogleTokenExchageError } from "../errors";
 import { createJWT } from "../services/jwt.service";
+import jwt from 'jsonwebtoken';
 
 
 const router = Router();
@@ -42,7 +41,9 @@ router.get("/google/callback",async(req:Request,res:Response)=>{
         const user:User = mapGoogleUser(userInfo);
         const createdUser = await createUser(user);
         
-        const token = createJWT({userId:createdUser.googleId,email:createdUser.email});
+        console.log("creating token",createUser);
+
+        const token = createJWT({userId:createdUser.id,email:createdUser.email});
 
         res.cookie("token",token,{
             secure:false,
@@ -74,6 +75,35 @@ if (error instanceof UserAlreadyExistsError) {
         });
     }
         
+})
+
+
+
+router.get('/me',(req:Request,res:Response)=>{
+    const token = req.cookies.token;
+
+    if(!token){
+        return res.status(401).json({
+            authenticated:false
+        });
+    }
+
+
+    try{
+        const payload = jwt.verify(
+            token,
+            process.env.JWT_SECRET!
+        );
+
+        return res.status(200).json({
+            authenticated:true,
+            user:payload
+        })
+    }catch{
+        return res.status(401).json({
+            Authenticated:false
+        })
+    }
 })
 
 export default router;

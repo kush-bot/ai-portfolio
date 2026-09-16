@@ -130,6 +130,18 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BrokerConnectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  broker: 'broker',
+  brokerUserId: 'brokerUserId',
+  accessToken: 'accessToken',
+  extendedToken: 'extendedToken',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -147,7 +159,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  BrokerConnection: 'BrokerConnection'
 };
 
 /**

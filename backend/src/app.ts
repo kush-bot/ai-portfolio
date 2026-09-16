@@ -19,9 +19,9 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    pinoHttp({logger})
-)
+// app.use(
+//     pinoHttp({logger})
+// )
 
 
 

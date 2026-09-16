@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { SeamlessHeader } from '@/components/dashboard/SeamlessHeader';
@@ -21,6 +21,34 @@ function DashboardContent() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [activeChartTab, setActiveChartTab] = useState<ChartTab>('PORTFOLIO');
 
+
+  
+useEffect(() => {
+    const getHoldings = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:4000/broker/get-holding",
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            console.log("Holdings:", data);
+        } catch (error) {
+            console.error("Failed to fetch holdings:", error);
+        }
+    };
+
+    getHoldings();
+}, []);
+
   const handleSync = () => {
     setIsSyncing(true);
     setTimeout(() => {
@@ -28,6 +56,8 @@ function DashboardContent() {
     }, 1000);
   };
 
+
+  
   const formatBrokerName = (id: string) => {
     if (id === 'upstox') return 'Upstox';
     if (id === 'angel-one') return 'Angel One';

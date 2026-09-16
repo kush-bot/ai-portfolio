@@ -31,8 +31,11 @@ model BrokerConnection {
     accessToken String
     extendedToken String?
 
+    active Boolean @default(false)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
 
     @@unique([userId,broker])
 }

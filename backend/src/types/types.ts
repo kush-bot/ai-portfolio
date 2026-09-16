@@ -1,4 +1,5 @@
 export interface User{
+    id:string,
     googleId:string,
     name:string,
     avatar:string,
@@ -19,4 +20,21 @@ export interface BrokerConnectionUser{
     brokerUserId:string,
     accessToken:string,
     extendedToken?:string,    
+}
+
+export interface UpstocxTokenExchangeResponse{
+    BrokerEmail:string,
+    Broker:string,
+    BrokerUserID:string,
+    BrokerUserName:string,
+    BrokerUserType:string,
+    Access_token:string,
+    Extended_token:string
+
+}
+
+
+
+export interface UnifiedHolding{
+    
 }

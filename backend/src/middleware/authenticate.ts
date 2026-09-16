@@ -9,8 +9,6 @@ export function Authenticate(
 ){
     const token = req.cookies.token;
 
-    console.log("authencation call ",req,token);
-
     if(!token){
         return res.status(401).json({
             message:"Not Authenticated"
@@ -21,7 +19,7 @@ export function Authenticate(
         const payload = jwt.verify(
             token,
             process.env.JWT_SECRET!
-        ) as JwtData;
+        ) as JwtData ;
         
         req.user = payload;
 

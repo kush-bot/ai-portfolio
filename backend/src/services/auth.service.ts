@@ -41,8 +41,6 @@ export const getUserInfo = async (access_token: string) => {
     return await response.json();
 }
 
-
-
 export const createUser = async (user: User):Promise<User> => {
 
 
@@ -54,21 +52,25 @@ export const createUser = async (user: User):Promise<User> => {
             }
         })
 
+
         if(exist){
             return mapGoogleUser(exist);
         }
+        console.log("user doesnt exist");
 
         const response = await prisma.user.create({
             data: {
                 ...user
             }
-        })
+        });
+
         console.log("supa response",response)
 
         return mapGoogleUser(response);
 
     }catch (error){
 
+        console.log("the error ",error);
         if(error instanceof UserAlreadyExistsError){
             throw error
         }
